@@ -1,0 +1,47 @@
+Trouver les "Labels"
+
+
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?o1 (rdfs:label as ?property) ?str_label ('20221204_3' as ?import_metadata)
+WHERE {
+  SELECT DISTINCT ?o1 (STR(?label) as ?str_label)
+  WHERE { 
+     {
+  {?o1 ?p dbc:Explorers_of_Africa.}
+
+}
+    ?o1 a dbo:Person;
+      dbp:birthDate | dbo:birthDate ?birthDate;
+  rdfs:label ?label.
+    BIND(xsd:integer(SUBSTR(STR(?birthDate), 1, 4)) AS ?birthYear)
+    FILTER (  LANG(?label) = 'en') 
+          }
+  ORDER BY ?birthYear
+  }
+
+
+Trouver année de naissance. 
+
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?o1 (dbo:birthYear as ?bY) ?birthYear ('20221204_1' as ?import_metadata)
+WHERE {
+  SELECT DISTINCT ?o1 ?birthYear
+  WHERE { 
+      {
+  {?o1 ?p dbc:Explorers_of_Africa.}
+
+}
+    ?o1 a dbo:Person;
+      dbp:birthDate | dbo:birthDate ?birthDate;
+  rdfs:label ?label.
+    BIND(xsd:integer(SUBSTR(STR(?birthDate), 1, 4)) AS ?birthYear)
+    FILTER ( LANG(?label) = 'en') 
+          }
+  ORDER BY ?birthYear
+  }

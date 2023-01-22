@@ -45,3 +45,12 @@ WHERE {
           }
   ORDER BY ?birthYear
   }
+
+
+Explorateurs français
+
+PREFIX dbo: <http://dbpedia.org/ontology/>
+SELECT ?explorer WHERE {
+  ?explorer dct:subject dbc:Explorers_of_Africa ;
+            dbo:nationality dbr:France .
+}
